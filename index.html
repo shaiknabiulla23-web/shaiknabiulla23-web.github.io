@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shaik Nabiulla – Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --surface2: #16161f;
+    --border: rgba(255,255,255,0.07);
+    --border-hover: rgba(255,255,255,0.15);
+    --accent: #7fd4b1;
+    --accent2: #a78bfa;
+    --accent3: #f472b6;
+    --text: #f0eee8;
+    --muted: #7a7888;
+    --serif: 'DM Serif Display', Georgia, serif;
+    --sans: 'DM Sans', system-ui, sans-serif;
+    --mono: 'DM Mono', monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 4rem;
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 8rem 4rem 4rem;
+    gap: 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -200px; right: -200px;
+    width: 700px; height: 700px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(127,212,177,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -100px; left: -100px;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(167,139,250,0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-tag {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.2s forwards;
+  }
+  .hero-name {
+    font-family: var(--serif);
+    font-size: clamp(3rem, 5vw, 4.5rem);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin-bottom: 1rem;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.35s forwards;
+  }
+  .hero-name em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .hero-desc {
+    font-size: 17px;
+    color: var(--muted);
+    max-width: 480px;
+    line-height: 1.8;
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.5s forwards;
+  }
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.65s forwards;
+  }
+  .btn {
+    padding: 0.75rem 1.75rem;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.03em;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #0a0a0f;
+    border: none;
+  }
+  .btn-primary:hover { background: #6ac9a3; transform: translateY(-1px); }
+  .btn-outline {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border-hover);
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+  .hero-right {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    opacity: 0;
+    animation: fadeUp 0.6s 0.5s forwards;
+  }
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    transition: border-color 0.2s;
+  }
+  .stat-card:hover { border-color: var(--border-hover); }
+  .stat-icon {
+    width: 40px; height: 40px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .stat-icon.green { background: rgba(127,212,177,0.1); color: var(--accent); }
+  .stat-icon.purple { background: rgba(167,139,250,0.1); color: var(--accent2); }
+  .stat-icon.pink { background: rgba(244,114,182,0.1); color: var(--accent3); }
+  .stat-label { font-size: 12px; color: var(--muted); margin-bottom: 2px; }
+  .stat-value { font-size: 15px; font-weight: 500; }
+
+  /* ── SECTIONS ── */
+  section { padding: 5rem 4rem; }
+  .section-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 3vw, 2.8rem);
+    line-height: 1.15;
+    margin-bottom: 1rem;
+  }
+  .section-desc {
+    color: var(--muted);
+    max-width: 560px;
+    font-size: 16px;
+    margin-bottom: 3rem;
+  }
+  hr.divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 0 4rem;
+  }
+
+  /* ── SKILLS ── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+  .skill-group {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.5rem;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .skill-group:hover { border-color: var(--border-hover); transform: translateY(-2px); }
+  .skill-group-title {
+    font-size: 11px;
+    font-family: var(--mono);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tag {
+    font-size: 13px;
+    padding: 4px 12px;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    color: var(--text);
+    background: var(--surface2);
+  }
+  .tag.accent { border-color: rgba(127,212,177,0.3); color: var(--accent); }
+
+  /* ── PROJECTS ── */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.25rem;
+  }
+  .project-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    transition: border-color 0.2s, transform 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .project-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--accent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .project-card:hover { border-color: var(--border-hover); transform: translateY(-3px); }
+  .project-card:hover::before { opacity: 1; }
+  .project-number {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+  }
+  .project-title {
+    font-family: var(--serif);
+    font-size: 1.4rem;
+    line-height: 1.2;
+  }
+  .project-desc { font-size: 14px; color: var(--muted); line-height: 1.65; flex: 1; }
+  .project-tools { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 0.5rem; }
+  .tool-pill {
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 3px;
+    background: var(--surface2);
+    color: var(--accent);
+    border: 1px solid rgba(127,212,177,0.15);
+  }
+
+  /* ── EDUCATION ── */
+  .edu-grid { display: grid; gap: 1rem; }
+  .edu-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.5rem 1.75rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: start;
+    gap: 1rem;
+    transition: border-color 0.2s;
+  }
+  .edu-card:hover { border-color: var(--border-hover); }
+  .edu-degree { font-weight: 500; font-size: 16px; margin-bottom: 4px; }
+  .edu-school { font-size: 14px; color: var(--muted); }
+  .edu-period {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+    text-align: right;
+  }
+  .edu-score {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--accent);
+    text-align: right;
+    margin-top: 4px;
+  }
+
+  /* ── CERTS ── */
+  .cert-list { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1rem; }
+  .cert-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem 1.5rem;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--text);
+    transition: border-color 0.2s;
+  }
+  .cert-card:hover { border-color: var(--accent); }
+  .cert-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  /* ── CONTACT ── */
+  .contact-section {
+    background: var(--surface);
+    margin: 0 4rem;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    padding: 3.5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  .contact-links { display: flex; flex-direction: column; gap: 0.75rem; margin-top: 1.5rem; }
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.875rem 1.25rem;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    text-decoration: none;
+    color: var(--text);
+    font-size: 14px;
+    transition: all 0.2s;
+  }
+  .contact-link:hover { border-color: var(--accent); color: var(--accent); }
+  .contact-link-icon { font-size: 16px; color: var(--muted); }
+  .contact-link:hover .contact-link-icon { color: var(--accent); }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 2rem 4rem;
+    font-size: 13px;
+    color: var(--muted);
+    font-family: var(--mono);
+    letter-spacing: 0.04em;
+    margin-top: 3rem;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.6s, transform 0.6s;
+  }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { gap: 1.5rem; }
+    .hero { grid-template-columns: 1fr; padding: 7rem 1.5rem 3rem; }
+    .hero-right { display: none; }
+    section { padding: 4rem 1.5rem; }
+    hr.divider { margin: 0 1.5rem; }
+    .contact-section { grid-template-columns: 1fr; margin: 0 1.5rem; padding: 2rem; gap: 2rem; }
+    footer { padding: 2rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">SN_</a>
+  <ul class="nav-links">
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-left">
+    <div class="hero-tag">// B.Tech CSE · Data Science</div>
+    <h1 class="hero-name">Shaik<br><em>Nabiulla</em></h1>
+    <p class="hero-desc">
+      Backend developer & data science student at Mohan Babu University, Tirupati.
+      Building AI-driven applications and exploring the intersection of software engineering and intelligent systems.
+    </p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn btn-primary">View Projects</a>
+      <a href="#contact" class="btn btn-outline">Get in Touch</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="stat-card">
+      <div class="stat-icon green">🎓</div>
+      <div>
+        <div class="stat-label">CGPA</div>
+        <div class="stat-value">8.16 / 10 — Mohan Babu University</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon purple">📊</div>
+      <div>
+        <div class="stat-label">Specialisation</div>
+        <div class="stat-value">Data Science & Backend Dev</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon pink">🌐</div>
+      <div>
+        <div class="stat-label">Languages Spoken</div>
+        <div class="stat-value">English · Telugu · Hindi · Urdu</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon green">💡</div>
+      <div>
+        <div class="stat-label">Intermediate Score</div>
+        <div class="stat-value">96.8% — Sri Chaitanya Junior College</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label reveal">01 — Expertise</div>
+  <h2 class="section-title reveal">Technical Skills</h2>
+  <p class="section-desc reveal">
+    A strong foundation across programming languages, core CS concepts, and problem-solving.
+  </p>
+  <div class="skills-grid">
+    <div class="skill-group reveal">
+      <div class="skill-group-title">Languages</div>
+      <div class="skill-tags">
+        <span class="tag accent">Python</span>
+        <span class="tag accent">Java</span>
+        <span class="tag">C</span>
+        <span class="tag">JavaScript</span>
+        <span class="tag">SQL</span>
+        <span class="tag">R</span>
+      </div>
+    </div>
+    <div class="skill-group reveal">
+      <div class="skill-group-title">Web & Backend</div>
+      <div class="skill-tags">
+        <span class="tag accent">HTML5</span>
+        <span class="tag accent">CSS3</span>
+        <span class="tag">MySQL</span>
+        <span class="tag">MS SQL Server</span>
+      </div>
+    </div>
+    <div class="skill-group reveal">
+      <div class="skill-group-title">Core Computer Science</div>
+      <div class="skill-tags">
+        <span class="tag">OOP</span>
+        <span class="tag">DBMS</span>
+        <span class="tag">Data Structures</span>
+        <span class="tag">Algorithms</span>
+        <span class="tag">Computer Networks</span>
+      </div>
+    </div>
+    <div class="skill-group reveal">
+      <div class="skill-group-title">Soft Skills</div>
+      <div class="skill-tags">
+        <span class="tag">Analytical Thinking</span>
+        <span class="tag">Team Collaboration</span>
+        <span class="tag">Problem Solving</span>
+        <span class="tag">Communication</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label reveal">02 — Work</div>
+  <h2 class="section-title reveal">Projects</h2>
+  <p class="section-desc reveal">
+    A selection of hands-on projects built to solve real problems and deepen technical understanding.
+  </p>
+  <div class="projects-grid">
+    <div class="project-card reveal">
+      <div class="project-number">01</div>
+      <div class="project-title">Currency Converter</div>
+      <p class="project-desc">
+        A console-based currency converter built using Java fundamentals. Implements real-time exchange rate logic with thorough input validation to ensure accurate and robust conversions.
+      </p>
+      <div class="project-tools">
+        <span class="tool-pill">Java</span>
+        <span class="tool-pill">Eclipse</span>
+      </div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-number">02</div>
+      <div class="project-title">College Event Management System</div>
+      <p class="project-desc">
+        A full-stack event management system for colleges with a structured MySQL database backend and a web-based frontend, enabling efficient event data storage and retrieval.
+      </p>
+      <div class="project-tools">
+        <span class="tool-pill">MySQL</span>
+        <span class="tool-pill">Java</span>
+        <span class="tool-pill">HTML</span>
+        <span class="tool-pill">CSS</span>
+        <span class="tool-pill">MS SQL Server</span>
+      </div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-number">03</div>
+      <div class="project-title">Student Stress Factors Analysis</div>
+      <p class="project-desc">
+        An Exploratory Data Analysis (EDA) project identifying key stress factors among students using correlation analysis, descriptive statistics, and rich data visualisations.
+      </p>
+      <div class="project-tools">
+        <span class="tool-pill">Python</span>
+        <span class="tool-pill">EDA</span>
+        <span class="tool-pill">Data Visualisation</span>
+        <span class="tool-pill">Statistics</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-label reveal">03 — Background</div>
+  <h2 class="section-title reveal">Education</h2>
+  <p class="section-desc reveal">
+    Academic excellence across engineering and science studies.
+  </p>
+  <div class="edu-grid">
+    <div class="edu-card reveal">
+      <div>
+        <div class="edu-degree">B.Tech in CSE (Data Science)</div>
+        <div class="edu-school">Mohan Babu University, Tirupati</div>
+      </div>
+      <div>
+        <div class="edu-period">2023 – 2027</div>
+        <div class="edu-score">CGPA 8.16</div>
+      </div>
+    </div>
+    <div class="edu-card reveal">
+      <div>
+        <div class="edu-degree">Intermediate (XII)</div>
+        <div class="edu-school">Sri Chaitanya Junior College</div>
+      </div>
+      <div>
+        <div class="edu-period">2021 – 2023</div>
+        <div class="edu-score">96.8%</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top: 2.5rem;">
+    <div class="section-label reveal" style="margin-bottom: 1rem;">Relevant Coursework</div>
+    <div class="skill-tags reveal">
+      <span class="tag">Object-Oriented Programming</span>
+      <span class="tag">Computer Networks</span>
+      <span class="tag">Database Management Systems</span>
+      <span class="tag">Data Structures & Algorithms</span>
+    </div>
+  </div>
+
+  <div style="margin-top: 2.5rem;">
+    <div class="section-label reveal" style="margin-bottom: 1rem;">Certifications</div>
+    <div class="cert-list reveal">
+      <div class="cert-card"><span class="cert-dot"></span>STEP English Certificate – Cambridge English</div>
+      <div class="cert-card"><span class="cert-dot"></span>HTML & CSS Certification – Coursera</div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- CONTACT -->
+<section id="contact" style="padding-bottom: 3rem;">
+  <div class="contact-section reveal">
+    <div>
+      <div class="section-label">04 — Say Hello</div>
+      <h2 class="section-title" style="margin-bottom: 0.75rem;">Let's connect</h2>
+      <p style="color: var(--muted); font-size: 15px; line-height: 1.8;">
+        I'm actively looking for backend and data science opportunities. Whether you have a project, an internship, or just want to chat tech — feel free to reach out.
+      </p>
+    </div>
+    <div>
+      <div class="contact-links">
+        <a href="mailto:shaiknabiulla23@gmail.com" class="contact-link">
+          <span class="contact-link-icon">✉</span>
+          shaiknabiulla23@gmail.com
+        </a>
+        <a href="tel:+919032421298" class="contact-link">
+          <span class="contact-link-icon">☏</span>
+          +91 90324 21298
+        </a>
+        <a href="https://www.linkedin.com/in/shaik-nabiulla-0387a1343" target="_blank" class="contact-link">
+          <span class="contact-link-icon">in</span>
+          linkedin.com/in/shaik-nabiulla
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2025 Shaik Nabiulla &nbsp;·&nbsp; Built with craft &amp; intention
+</footer>
+
+<script>
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      e.target.style.transitionDelay = `${(i % 4) * 0.07}s`;
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1 });
+reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
